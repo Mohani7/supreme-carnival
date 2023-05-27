@@ -1,0 +1,89 @@
+#include <iostream>
+using namespace std;
+
+// Define the Node struct for the linked list
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Define the TreeNode struct for the binary search tree
+struct TreeNode {
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+};
+
+// Insert a new node at the end of the linked list
+void insert(Node*& head, int data) {
+    Node* newNode = new Node;
+    newNode->data = data;
+    newNode->next = nullptr;
+    if (head == nullptr) {
+        head = newNode;
+    } else {
+        Node* current = head;
+        while (current->next != nullptr) {
+            current = current->next;
+        }
+        current->next = newNode;
+    }
+}
+
+// Insert a new node into the binary search tree
+void insert(TreeNode*& root, int data) {
+    if (root == nullptr) {
+        root = new TreeNode;
+        root->data = data;
+        root->left = nullptr;
+        root->right = nullptr;
+    } else if (data < root->data) {
+        insert(root->left, data);
+    } else {
+        insert(root->right, data);
+    }
+}
+
+// Traverse the linked list and print the data in each node
+void printList(Node* head) {
+    Node* current =head;
+    while (current != nullptr) {
+        cout << current->data << " ";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+// Traverse the binary search tree in-order and print the data in each node
+void printTree(TreeNode* root) {
+    if (root != nullptr) {
+        printTree(root->left);
+        cout << root->data << " ";
+        printTree(root->right);
+    }
+}
+
+int main() {
+    // Create a linked list with some data
+    Node* head = nullptr;
+    insert(head, 1);
+    insert(head, 2);
+    insert(head, 3);
+    insert(head, 4);
+    cout << "Linked list: ";
+    printList(head);
+
+    // Create a binary search tree with some data
+    TreeNode* root = nullptr;
+    insert(root, 4);
+    insert(root, 2);
+    insert(root, 6);
+    insert(root, 1);
+    insert(root, 3);
+    insert(root, 5);
+    insert(root, 7);
+    cout << "Binary search tree: ";
+    printTree(root);
+
+    return 0;
+}
